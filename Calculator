@@ -28,7 +28,7 @@ import java.util.Scanner;
                     }
                     return true;
                 } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("Invalid input");
+                    throw new IllegalArgumentException("т.к. строка не является математической операцией");
                 }
             }
 
@@ -67,8 +67,7 @@ import java.util.Scanner;
                     case "+" -> a + b;
                     case "-" -> a - b;
                     case "/" -> a / b;
-                    default -> throw new IllegalArgumentException("Unsupported operator '" + op + "'");
+                    default -> throw new IllegalArgumentException("т.к. формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
                 };
-
             }
         }
