@@ -1,0 +1,74 @@
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+        public class Main {
+
+            public static void main(String[] args) {
+                String input = "";
+                System.out.println("Enter expression:");
+                Scanner sc = new Scanner(System.in);
+                input = sc.nextLine();
+                String output = calc(input.replaceAll(" ", ""));
+                System.out.println("Result:");
+                System.out.println(output);
+            }
+
+            public static boolean isEmpty(String value) {
+                if ((value == null) || (value.isEmpty())) {
+                    return true;
+                }
+                return false;
+            }
+
+            public static boolean isArabic(String[] numbers) {
+                try {
+                    for (String number : numbers) {
+                        Integer.parseInt(number);
+                    }
+                    return true;
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Invalid input");
+                }
+            }
+
+            public static String calc(String input) {
+
+                String[] numbers = input.split("\\W");
+                String[] operator = input.split("\\w");
+
+                if (numbers.length != 2 && operator.length != 2) {
+                    throw new IllegalArgumentException("Invalid input");
+                }
+
+                Arrays.sort(operator, Comparator.reverseOrder());
+                String op = operator[0];
+                String result = "";
+
+                if (isArabic(numbers)) {
+                    result = calcArabic(numbers[0], numbers[1], (op));
+                }
+                return result;
+            }
+
+            private static String calcArabic(String num1, String num2, String op) {
+                if (isEmpty(num1) || isEmpty(num2) || isEmpty(op)) {
+                    throw new IllegalArgumentException("Invalid input");
+                }
+                if ((Integer.parseInt(num1) > 10) || (Integer.parseInt(num2) > 10)) {
+                    throw new IllegalArgumentException("Invalid input");
+                }
+                return String.valueOf(calculate(Integer.parseInt(num1), Integer.parseInt(num2), op));
+            }
+
+            private static int calculate(int a, int b, String op) {
+                return switch (op) {
+                    case "*" -> a * b;
+                    case "+" -> a + b;
+                    case "-" -> a - b;
+                    case "/" -> a / b;
+                    default -> throw new IllegalArgumentException("Unsupported operator '" + op + "'");
+                };
+
+            }
+        }
